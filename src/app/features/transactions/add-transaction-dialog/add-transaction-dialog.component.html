@@ -1,0 +1,85 @@
+<h2 mat-dialog-title>Nova Transação</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="transactionForm" class="transaction-form">
+
+    <!-- Tipo de Transação -->
+    <mat-radio-group formControlName="type" class="type-radio-group">
+      <mat-radio-button value="expense" color="warn">Despesa</mat-radio-button>
+      <mat-radio-button value="income" color="primary">Receita</mat-radio-button>
+    </mat-radio-group>
+
+    <!-- Descrição -->
+    <mat-form-field appearance="outline">
+      <mat-label>Descrição</mat-label>
+      <input
+        matInput
+        formControlName="description"
+        placeholder="Ex: Compra no supermercado">
+      <mat-error *ngIf="transactionForm.get('description')?.invalid">
+        {{ getErrorMessage('description') }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Valor -->
+    <mat-form-field appearance="outline">
+      <mat-label>Valor</mat-label>
+      <input
+        matInput
+        type="number"
+        formControlName="amount"
+        placeholder="0.00">
+      <span matPrefix>R$&nbsp;</span>
+      <mat-error *ngIf="transactionForm.get('amount')?.invalid">
+        {{ getErrorMessage('amount') }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Categoria -->
+    <mat-form-field appearance="outline">
+      <mat-label>Categoria</mat-label>
+      <mat-select formControlName="categoryId">
+        <mat-option *ngFor="let category of filteredCategories" [value]="category.id">
+          <mat-icon [style.color]="category.color">{{ category.icon }}</mat-icon>
+          {{ category.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="transactionForm.get('categoryId')?.invalid">
+        {{ getErrorMessage('categoryId') }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Data -->
+    <mat-form-field appearance="outline">
+      <mat-label>Data</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        formControlName="date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Observações (Opcional) -->
+    <mat-form-field appearance="outline">
+      <mat-label>Observações (opcional)</mat-label>
+      <textarea
+        matInput
+        formControlName="notes"
+        rows="3"
+        placeholder="Adicione detalhes sobre esta transação..."></textarea>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onSubmit()"
+    [disabled]="transactionForm.invalid">
+    Adicionar
+  </button>
+</mat-dialog-actions>

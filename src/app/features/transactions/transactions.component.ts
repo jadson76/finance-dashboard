@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { AddTransactionDialogComponent } from './add-transaction-dialog/add-transaction-dialog.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -46,7 +48,8 @@ export class TransactionsComponent implements OnInit {
 
   constructor(
     private transactionService: TransactionService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -91,8 +94,16 @@ export class TransactionsComponent implements OnInit {
     }
   }
 
-  addTransaction(): void {
-    // Por enquanto só um alert, depois vamos criar um dialog
-    alert('Funcionalidade de adicionar transação será implementada em breve!');
-  }
+ addTransaction(): void {
+  const dialogRef = this.dialog.open(AddTransactionDialogComponent, {
+    width: '600px',
+    disableClose: false
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      this.transactionService.addTransaction(result);
+    }
+  });
+}
 }
