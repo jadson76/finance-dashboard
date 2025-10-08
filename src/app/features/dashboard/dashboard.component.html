@@ -1,1 +1,74 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+  <h1>Dashboard Financeiro</h1>
+
+  <div class="cards-grid">
+    <!-- Card: Receitas -->
+    <mat-card class="summary-card income">
+      <mat-card-header>
+        <mat-icon mat-card-avatar>trending_up</mat-icon>
+        <mat-card-title>Receitas</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="amount">{{ totalIncome | currency:'BRL' }}</div>
+        <div class="subtitle">Total do mês</div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Card: Despesas -->
+    <mat-card class="summary-card expense">
+      <mat-card-header>
+        <mat-icon mat-card-avatar>trending_down</mat-icon>
+        <mat-card-title>Despesas</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="amount">{{ totalExpense | currency:'BRL' }}</div>
+        <div class="subtitle">Total do mês</div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Card: Saldo -->
+    <mat-card class="summary-card balance">
+      <mat-card-header>
+        <mat-icon mat-card-avatar>account_balance</mat-icon>
+        <mat-card-title>Saldo</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="amount" [class.negative]="balance < 0">
+          {{ balance | currency:'BRL' }}
+        </div>
+        <div class="subtitle">Disponível</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Transações Recentes -->
+  <mat-card class="recent-transactions">
+    <mat-card-header>
+      <mat-card-title>Transações Recentes</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="transaction-list">
+        <div *ngFor="let transaction of transactions" class="transaction-item">
+          <div class="transaction-info">
+            <mat-icon [class]="transaction.type">
+              {{ transaction.type === 'income' ? 'arrow_upward' : 'arrow_downward' }}
+            </mat-icon>
+            <div class="details">
+              <div class="description">{{ transaction.description }}</div>
+              <div class="date">{{ transaction.date | date:'dd/MM/yyyy' }}</div>
+            </div>
+          </div>
+          <div class="amount" [class]="transaction.type">
+            {{ transaction.type === 'income' ? '+' : '-' }}
+            {{ transaction.amount | currency:'BRL' }}
+          </div>
+        </div>
+
+        <div *ngIf="transactions.length === 0" class="empty-state">
+          <mat-icon>receipt_long</mat-icon>
+          <p>Nenhuma transação encontrada</p>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

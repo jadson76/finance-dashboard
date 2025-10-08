@@ -1,0 +1,139 @@
+.transactions-container {
+  max-width: 1400px;
+  margin: 0 auto;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    h1 {
+      margin: 0;
+      color: #333;
+      font-weight: 400;
+    }
+
+    button {
+      mat-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+.filters-card {
+  margin-bottom: 24px;
+
+  .filters {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 16px;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    .search-field {
+      mat-icon {
+        color: #999;
+      }
+    }
+  }
+}
+
+.table-card {
+  .table-container {
+    overflow-x: auto;
+  }
+
+  .transactions-table {
+    width: 100%;
+
+    th {
+      font-weight: 600;
+      color: #666;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+
+    td {
+      padding: 16px 8px;
+    }
+
+    .description-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      mat-icon {
+        color: #666;
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+      }
+
+      span {
+        font-weight: 500;
+      }
+    }
+
+    .amount {
+      font-weight: 600;
+      font-size: 16px;
+
+      &.income {
+        color: #4caf50;
+      }
+
+      &.expense {
+        color: #f44336;
+      }
+    }
+
+    mat-chip {
+      &.income {
+        background: #e8f5e9;
+        color: #4caf50;
+      }
+
+      &.expense {
+        background: #ffebee;
+        color: #f44336;
+      }
+    }
+
+    tr:hover {
+      background: #fafafa;
+    }
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 64px 24px;
+    color: #999;
+
+    mat-icon {
+      font-size: 80px;
+      width: 80px;
+      height: 80px;
+      margin-bottom: 16px;
+      opacity: 0.3;
+    }
+
+    h3 {
+      margin: 0 0 8px 0;
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    p {
+      margin: 0;
+      font-size: 14px;
+    }
+  }
+}
